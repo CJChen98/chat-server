@@ -18,7 +18,7 @@ var AppJsonConfig = []byte(`
     "serve_type": "GoServe"
   },
   "mysql": {
-    "dsn": "root:1998.cjc@tcp(localhost:3306)/gin_chat?charset=utf8mb4&parseTime=True&loc=Local"
+    "dsn": "root:1998.cjc@tcp(localhost:3306)/gin-chat?charset=utf8mb4&parseTime=True&loc=Local"
   }
 }
 `)

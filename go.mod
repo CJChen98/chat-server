@@ -10,10 +10,8 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gorilla/websocket v1.4.2
 	github.com/json-iterator/go v1.1.10 // indirect
-	github.com/kr/fs v0.1.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/spf13/viper v1.7.1
-	github.com/tools/godep v0.0.0-20180126220526-ce0bfadeb516 // indirect
 	github.com/ugorji/go v1.1.13 // indirect
 	golang.org/x/sys v0.0.0-20201027090413-e1471140ff15 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect

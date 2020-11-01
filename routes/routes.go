@@ -3,12 +3,14 @@ package routes
 import (
 	"gin/controller"
 	"gin/servers/token"
-	"gin/ws/primary"
+	"gin/ws"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func InitRoutes() *gin.Engine {
+	hub := ws.NewHub()
+	go hub.Run()
 	engine := gin.Default()
 	engine.Use(CrossHandler())
 	v1 := engine.Group("/api/v1")
@@ -17,12 +19,15 @@ func InitRoutes() *gin.Engine {
 
 		authorized := v1.Group("/", token.MiddleTokenAuthHandler)
 		{
-			v1.GET("/logout", controller.LogoutHandler)
-			v1.GET("/ws", primary.Start)
-			authorized.GET("/home", controller.HomeHandler)
-			authorized.GET("/room/:room_id", controller.RoomHandler)
-			authorized.GET("/private-chat", controller.PrivateChatHandler)
-			authorized.POST("/img-upload", controller.ImageUploadHandler)
+			v1.GET("logout", controller.LogoutHandler)
+			//v1.GET("ws",primary.Start)
+			v1.GET("ws", func(context *gin.Context) {
+				hub.ServeWs(context)
+			})
+			authorized.GET("home", controller.HomeHandler)
+			authorized.GET("room/:ro om_id", controller.RoomHandler)
+			authorized.GET("private-chat", controller.PrivateChatHandler)
+			authorized.POST("img-upload", controller.ImageUploadHandler)
 			authorized.GET("pagination", controller.PaginationHandler)
 		}
 	}

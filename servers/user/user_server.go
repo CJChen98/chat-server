@@ -3,12 +3,10 @@ package user_service
 import (
 	"gin/models"
 	"gin/servers/security"
-	"gin/servers/session"
 	"gin/servers/token"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -39,7 +37,7 @@ func Login(c *gin.Context) {
 		userInfo = *newUser
 	}
 	if userInfo.ID > 0 {
-		session.SaveAuthSession(c, strconv.Itoa(int(userInfo.ID)))
+		//session.SaveAuthSession(c, strconv.Itoa(int(userInfo.ID)))
 		tokenString, err := generationToken(c, &userInfo)
 		if err != nil {
 			c.JSON(http.StatusOK, models.JSON{Code: 555, Msg: "create tokenString failure"})
@@ -54,7 +52,6 @@ func Login(c *gin.Context) {
 					User: u,
 				},
 			})
-			println("login success")
 			return
 		}
 

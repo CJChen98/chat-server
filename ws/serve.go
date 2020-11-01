@@ -87,10 +87,12 @@ func read(c *websocket.Conn) {
 		}
 
 		serveMsg := message
+		log.Println(serveMsg)
 		if string(serveMsg) == `heartbeat` {
 			_ = c.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok"}`))
 			continue
 		}
+		log.Println("收到的消息为: ", string(serveMsg))
 		_ = json.Unmarshal(message, &clientMsg)
 		if clientMsg.Data != nil {
 			if clientMsg.Status == msgTypeOnline { //进入房间
