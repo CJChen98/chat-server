@@ -7,6 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -46,10 +47,13 @@ func Login(c *gin.Context) {
 			u := userInfo
 			u.Password = ""
 			c.JSON(http.StatusOK, models.JSON{
-				Code: 200,
-				Msg:  tokenString,
+				Code:  200,
+				Msg:   "登录成功",
+				Token: tokenString,
 				Data: models.Data{
-					User: u,
+					User:     u,
+					Messages: make([]models.Message, 1),
+					Users:    make([]models.User, 1),
 				},
 			})
 			return
@@ -70,8 +74,9 @@ func generationToken(ctx *gin.Context, u *models.User) (string, error) {
 		Uid:      u.ID,
 		Username: u.Username,
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000, // 签名生效时间
-			ExpiresAt: time.Now().Unix() + 3600, // 过期时间 一小时
+			Id:        strconv.Itoa(int(u.ID)),
+			NotBefore: time.Now().Unix(),        // 签名生效时间
+			ExpiresAt: time.Now().Unix() + 7200, // 过期时间 2小时
 			Issuer:    "chitanda-gin-chat",      //签名的发行者
 		},
 	}

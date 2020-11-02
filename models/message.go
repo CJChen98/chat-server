@@ -10,6 +10,7 @@ type Message struct {
 	gorm.Model
 	ID       uint
 	UserId   int    `json:"user_id"`
+	Username string `json:"username"`
 	ToUserId int    `json:"to_user_id"`
 	RoomId   int    `json:"room_id"`
 	Content  string `json:"content"`

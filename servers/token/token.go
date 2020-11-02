@@ -22,10 +22,10 @@ type JWT struct {
 
 // 一些常量
 var (
-	TokenExpired     error = errors.New("Token is expired")
-	TokenNotValidYet error = errors.New("Token not active yet")
-	TokenMalformed   error = errors.New("That's not even a token")
-	TokenInvalid     error = errors.New("Couldn't handle this token:")
+	TokenExpired     = errors.New("Token is out time")
+	TokenNotValidYet = errors.New("Token not active yet")
+	TokenMalformed   = errors.New("That's not even a token")
+	TokenInvalid     = errors.New("Couldn't handle this token:")
 )
 
 func MiddleTokenAuthHandler(c *gin.Context) {
@@ -35,22 +35,17 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 			Code: -1,
 			Msg:  "token is null !",
 		})
+		c.Abort()
 		return
 	}
 	log.Print("get token-->", token)
 	claims, err := CreateJWT().ParseToken(token)
 	if err != nil {
-		if err == TokenExpired {
-			c.JSON(http.StatusOK, models.JSON{
-				Code: -2,
-				Msg:  "token is out time !",
-			})
-			return
-		}
 		c.JSON(http.StatusOK, models.JSON{
 			Code: -2,
-			Msg:  "token is out time !",
+			Msg:  err.Error(),
 		})
+		c.Abort()
 		return
 	}
 	c.Set("claims", claims)
@@ -63,8 +58,8 @@ func CreateJWT() *JWT {
 }
 
 func (j *JWT) CreateToken(claims MyClaims) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
-	return token.SigningString()
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(j.SingingKey)
 }
 
 func (j *JWT) ParseToken(tokenString string) (*MyClaims, error) {

@@ -14,7 +14,7 @@ var AppJsonConfig = []byte(`
     "port": "8322",
     "upload_file_path": "e:\\golang\\www\\go-gin-chat\\tmp_images\\",
     "cookie_key": "4238uihfieh49r3453kjdfg",
-	"token_key": "4238uihfieh49r3453kjdfg",
+	"token_key": "gin-chat-server",
     "serve_type": "GoServe"
   },
   "mysql": {

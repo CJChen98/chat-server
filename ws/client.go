@@ -2,6 +2,8 @@ package ws
 
 import (
 	"bytes"
+	"encoding/json"
+	"gin/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
@@ -62,7 +64,9 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		log.Println("ws收到消息: ", string(message))
+		m:=new(models.Message)
+		json.Unmarshal(message,m)
+		log.Println("ws收到消息: ",message)
 		c.hub.broadcast <- message
 	}
 }

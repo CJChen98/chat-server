@@ -16,16 +16,16 @@ func InitRoutes() *gin.Engine {
 	v1 := engine.Group("/api/v1")
 	{
 		v1.POST("/login", controller.LoginHandler)
-
+		v1.GET("ws", func(context *gin.Context) {
+			hub.ServeWs(context)
+		})
 		authorized := v1.Group("/", token.MiddleTokenAuthHandler)
 		{
-			v1.GET("logout", controller.LogoutHandler)
+			authorized.GET("logout", controller.LogoutHandler)
 			//v1.GET("ws",primary.Start)
-			v1.GET("ws", func(context *gin.Context) {
-				hub.ServeWs(context)
-			})
+
 			authorized.GET("home", controller.HomeHandler)
-			authorized.GET("room/:ro om_id", controller.RoomHandler)
+			authorized.GET("room/:room_id", controller.RoomHandler)
 			authorized.GET("private-chat", controller.PrivateChatHandler)
 			authorized.POST("img-upload", controller.ImageUploadHandler)
 			authorized.GET("pagination", controller.PaginationHandler)
