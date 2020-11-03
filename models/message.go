@@ -3,7 +3,6 @@ package models
 import (
 	"gorm.io/gorm"
 	"sort"
-	"strconv"
 )
 
 type Message struct {
@@ -17,26 +16,28 @@ type Message struct {
 	ImageUrl string `json:"image_url"`
 }
 
-func SaveContent(value interface{}) Message {
+func SaveContent(message Message) Message {
 	var m Message
-	m.UserId = value.(map[string]interface{})["user_id"].(int)
-	m.ToUserId = value.(map[string]interface{})["to_user_id"].(int)
-	m.Content = value.(map[string]interface{})["content"].(string)
+	m.Username = message.Username
+	m.UserId = message.UserId
+	m.ToUserId = message.ToUserId
+	m.Content = message.Content
+	m.RoomId = message.RoomId
 
-	roomIdStr := value.(map[string]interface{})["room_id"].(string)
-
-	roomIdInt, _ := strconv.Atoi(roomIdStr)
-
-	m.RoomId = roomIdInt
-
-	if _, ok := value.(map[string]interface{})["image_url"]; ok {
-		m.ImageUrl = value.(map[string]interface{})["image_url"].(string)
+	if "" != message.ImageUrl {
+		m.ImageUrl = message.ImageUrl
 	}
 
 	ChatDB.Create(&m)
 	return m
 }
-
+func GetMsgListByRoom(roomId string) []Message {
+	var result []Message
+	ChatDB.Model(&Message{}).
+		Select("user_id", "username", "content", "image_url", "created_at").
+		Where("room_id = " + roomId).Order("id desc").Find(&result)
+	return result
+}
 func GetLimitMsg(roomId string, offset int) []map[string]interface{} {
 
 	var results []map[string]interface{}

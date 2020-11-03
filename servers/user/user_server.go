@@ -20,14 +20,14 @@ func Login(c *gin.Context) {
 		Password: pwd,
 	}
 	if err := c.ShouldBind(&u); err != nil {
-		c.JSON(http.StatusOK, models.JSON{Code: 500, Msg: "用户名或密码格式不规范"})
+		c.JSON(http.StatusBadRequest, models.JSON{Code: 500, Msg: "用户名或密码格式不规范"})
 		return
 	}
 	userInfo := models.FindUserByField("username", username)
 	md5Pwd := security.Md5Encrypt(pwd)
 	if userInfo.ID > 0 {
 		if userInfo.Password != md5Pwd {
-			c.JSON(http.StatusOK, models.JSON{Code: 501, Msg: "密码错误"})
+			c.JSON(http.StatusBadRequest, models.JSON{Code: http.StatusBadRequest, Msg: "密码错误"})
 			return
 		}
 	} else {
@@ -41,7 +41,7 @@ func Login(c *gin.Context) {
 		//session.SaveAuthSession(c, strconv.Itoa(int(userInfo.ID)))
 		tokenString, err := generationToken(c, &userInfo)
 		if err != nil {
-			c.JSON(http.StatusOK, models.JSON{Code: 555, Msg: "create tokenString failure"})
+			c.JSON(http.StatusInternalServerError, models.JSON{Code: http.StatusInternalServerError, Msg: "create tokenString failure"})
 			return
 		} else {
 			u := userInfo
@@ -60,7 +60,7 @@ func Login(c *gin.Context) {
 		}
 
 	} else {
-		c.JSON(http.StatusOK, models.JSON{Code: 555, Msg: "系统错误"})
+		c.JSON(http.StatusInternalServerError, models.JSON{Code: http.StatusInternalServerError, Msg: "系统错误"})
 		return
 	}
 }

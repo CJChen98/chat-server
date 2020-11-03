@@ -1,7 +1,6 @@
 package ws
 
 import (
-	"bytes"
 	"encoding/json"
 	"gin/models"
 	"github.com/gin-gonic/gin"
@@ -41,7 +40,14 @@ type Client struct {
 	conn         *websocket.Conn
 	send         chan []byte
 }
-
+type wsMSG struct {
+	UserId   int    `json:"user_id"`
+	Username string `json:"username"`
+	ToUserId int    `json:"to_user_id"`
+	RoomId   int    `json:"room_id"`
+	Content  string `json:"content"`
+	ImageUrl string `json:"image_url"`
+}
 // readPump pumps messages from the websocket connection to the hub.
 //
 // The application runs readPump in a per-connection goroutine. The application
@@ -52,9 +58,9 @@ func (c *Client) readPump() {
 		c.hub.unregister <- c
 		c.conn.Close()
 	}()
-	c.conn.SetReadLimit(maxMessageSize)
-	_ = c.conn.SetReadDeadline(time.Now().Add(pongWait))
-	c.conn.SetPongHandler(func(string) error { _ = c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	//c.conn.SetReadLimit(maxMessageSize)
+	//_ = c.conn.SetReadDeadline(time.Now().Add(pongWait))
+	//c.conn.SetPongHandler(func(string) error { _ = c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 	for {
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
@@ -63,10 +69,17 @@ func (c *Client) readPump() {
 			}
 			break
 		}
-		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		m:=new(models.Message)
-		json.Unmarshal(message,m)
-		log.Println("ws收到消息: ",message)
+		//message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		clientMsg := models.Message{}
+		//str:=string(message)
+
+		err = json.Unmarshal(message, &clientMsg)
+		if err != nil {
+			println(err.Error())
+			continue
+		}
+		clientMsg = models.SaveContent(clientMsg)
+		message, _ = json.Marshal(clientMsg)
 		c.hub.broadcast <- message
 	}
 }
