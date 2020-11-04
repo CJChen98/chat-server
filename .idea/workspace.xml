@@ -19,12 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c01fa1cc-cd90-4a5d-a7f8-85c01b9d7c8c" name="Default Changelist" comment="">
+    <list default="true" id="c01fa1cc-cd90-4a5d-a7f8-85c01b9d7c8c" name="Default Changelist" comment="消息记录请求分页加载">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/MainController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/MainController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/servers/message/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/message/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/servers/token/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/token/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +134,10 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="消息记录请求分页加载" />
+    <option name="LAST_COMMIT_MESSAGE" value="消息记录请求分页加载" />
+  </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
@@ -224,6 +228,10 @@
       <screen x="0" y="0" width="1596" height="997" />
     </state>
     <state x="300" y="143" key="SettingsEditor/0.0.1596.997@0.0.1596.997" timestamp="1603787953550" />
+    <state x="391" y="232" key="Vcs.Push.Dialog.v2" timestamp="1604476518281">
+      <screen x="0" y="0" width="1596" height="997" />
+    </state>
+    <state x="391" y="232" key="Vcs.Push.Dialog.v2/0.0.1596.997@0.0.1596.997" timestamp="1604476518281" />
     <state width="805" height="505" key="XDebugger.FullValuePopup" timestamp="1604366310965">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
