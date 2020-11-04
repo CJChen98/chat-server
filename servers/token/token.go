@@ -6,7 +6,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"log"
 	"net/http"
 	"time"
 )
@@ -38,7 +37,6 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	log.Print("get token-->", token)
 	claims, err := CreateJWT().ParseToken(token)
 	if err != nil {
 		c.JSON(http.StatusOK, models.JSON{

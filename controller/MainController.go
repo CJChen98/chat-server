@@ -39,7 +39,11 @@ func FindHandler(ctx *gin.Context) {
 			})
 			return
 		}
-		servers.GetMessageList(ctx, id)
+		page, ok := ctx.GetQuery("page")
+		if !ok {
+			page = "0"
+		}
+		servers.GetMessageList(ctx, id, page)
 	}
 }
 func RoomHandler(ctx *gin.Context) {

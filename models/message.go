@@ -2,7 +2,9 @@ package models
 
 import (
 	"gorm.io/gorm"
+	"log"
 	"sort"
+	"strconv"
 )
 
 type Message struct {
@@ -31,12 +33,28 @@ func SaveContent(message Message) Message {
 	ChatDB.Create(&m)
 	return m
 }
-func GetMsgListByRoom(roomId string) []Message {
+
+var pageSize = 20
+
+func GetMsgListByRoom(roomId string, page string) ([]Message, int) {
 	var result []Message
+	pages, _ := strconv.Atoi(page)
+	var count int64
+	ChatDB.Model(&Message{}).Where("room_id = " + roomId).Count(&count)
+	maxPage := count / int64(pageSize)
+	if int64(pages) > maxPage || pages < 0 {
+		return nil, int(maxPage)
+	}
+	offset := (pages) * pageSize
+	log.Println("offset: ", offset)
 	ChatDB.Model(&Message{}).
-		Select("user_id", "username", "content", "image_url", "created_at").
-		Where("room_id = " + roomId).Order("id desc").Find(&result)
-	return result
+		Select("user_id", "username", "content", "image_url", "created_at", "room_id").
+		Where("room_id = " + roomId).
+		Order("id desc").
+		Offset(offset).
+		Limit(pageSize).
+		Find(&result)
+	return result, int(maxPage)
 }
 func GetLimitMsg(roomId string, offset int) []map[string]interface{} {
 
