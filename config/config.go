@@ -11,7 +11,7 @@ mysql.dsn // mysql 连接地址dsn
 var AppJsonConfig = []byte(`
 {
   "app": {
-    "port": "8322",
+    "port": ":1234",
     "upload_file_path": "e:\\golang\\www\\go-gin-chat\\tmp_images\\",
     "cookie_key": "4238uihfieh49r3453kjdfg",
 	"token_key": "gin-chat-server",

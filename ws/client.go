@@ -40,14 +40,6 @@ type Client struct {
 	conn         *websocket.Conn
 	send         chan []byte
 }
-type wsMSG struct {
-	UserId   int    `json:"user_id"`
-	Username string `json:"username"`
-	ToUserId int    `json:"to_user_id"`
-	RoomId   int    `json:"room_id"`
-	Content  string `json:"content"`
-	ImageUrl string `json:"image_url"`
-}
 // readPump pumps messages from the websocket connection to the hub.
 //
 // The application runs readPump in a per-connection goroutine. The application

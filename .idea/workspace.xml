@@ -19,12 +19,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c01fa1cc-cd90-4a5d-a7f8-85c01b9d7c8c" name="Default Changelist" comment="消息记录请求分页加载">
+    <list default="true" id="c01fa1cc-cd90-4a5d-a7f8-85c01b9d7c8c" name="Default Changelist" comment="使用 cors.Default()允许跨域请求">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servers/user/user_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/user/user_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ws/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/ws/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/ws/hub.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +95,7 @@
       <script-file value="$PROJECT_DIR$/sql/gin_chat.sql" />
       <script-mode>FILE</script-mode>
       <data-source id="fb21fcb0-07c4-407b-a2e7-f3bf22432f9a" />
+      <data-source id="1ff11bee-ba25-4c28-9531-ec463933469e" />
       <method v="2" />
     </configuration>
     <configuration name="go build gin" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -113,8 +119,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build gin" />
-        <item itemvalue="Database Script.gin_chat.sql" />
         <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Database Script.gin_chat.sql" />
       </list>
     </recent_temporary>
   </component>
@@ -136,7 +142,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="消息记录请求分页加载" />
-    <option name="LAST_COMMIT_MESSAGE" value="消息记录请求分页加载" />
+    <MESSAGE value="使用 cors.Default()允许跨域请求" />
+    <option name="LAST_COMMIT_MESSAGE" value="使用 cors.Default()允许跨域请求" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -158,15 +165,15 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="693" y="363" key="#Notifications/0.0.1920.1080@0.0.1920.1080" timestamp="1604135456002" />
-    <state x="22" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604279933142">
+    <state x="22" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604483609980">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state x="22" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1596.997@0.0.1596.997" timestamp="1604279933142" />
+    <state x="22" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1596.997@0.0.1596.997" timestamp="1604483609980" />
     <state x="26" y="214" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604135601485" />
-    <state x="547" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603784130789">
+    <state x="547" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604481730591">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state x="547" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1596.997@0.0.1596.997" timestamp="1603784130789" />
+    <state x="547" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1596.997@0.0.1596.997" timestamp="1604481730591" />
     <state x="548" y="368" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1603679680984">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
@@ -175,29 +182,33 @@
       <screen x="0" y="0" width="1596" height="997" />
     </state>
     <state x="604" y="215" key="#com.intellij.ide.util.MemberChooser/0.0.1596.997@0.0.1596.997" timestamp="1603938094432" />
+    <state x="87" y="34" width="1410" height="811" key="DiffContextDialog" timestamp="1604548857155">
+      <screen x="0" y="0" width="1596" height="997" />
+    </state>
+    <state x="87" y="34" width="1410" height="811" key="DiffContextDialog/0.0.1596.997@0.0.1596.997" timestamp="1604548857155" />
     <state x="576" y="240" key="FileChooserDialogImpl" timestamp="1604278160074">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
     <state x="576" y="240" key="FileChooserDialogImpl/0.0.1596.997@0.0.1596.997" timestamp="1604278160074" />
-    <state width="1553" height="330" key="GridCell.Tab.0.bottom" timestamp="1604474740227">
+    <state width="1553" height="219" key="GridCell.Tab.0.bottom" timestamp="1604555154630">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state width="1553" height="330" key="GridCell.Tab.0.bottom/0.0.1596.997@0.0.1596.997" timestamp="1604474740227" />
+    <state width="1553" height="219" key="GridCell.Tab.0.bottom/0.0.1596.997@0.0.1596.997" timestamp="1604555154630" />
     <state width="1877" height="363" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1604200489640" />
-    <state width="1553" height="330" key="GridCell.Tab.0.center" timestamp="1604474740227">
+    <state width="1553" height="219" key="GridCell.Tab.0.center" timestamp="1604555154630">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state width="1553" height="330" key="GridCell.Tab.0.center/0.0.1596.997@0.0.1596.997" timestamp="1604474740227" />
+    <state width="1553" height="219" key="GridCell.Tab.0.center/0.0.1596.997@0.0.1596.997" timestamp="1604555154630" />
     <state width="1877" height="363" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1604200489640" />
-    <state width="1553" height="330" key="GridCell.Tab.0.left" timestamp="1604474740225">
+    <state width="1553" height="219" key="GridCell.Tab.0.left" timestamp="1604555154629">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state width="1553" height="330" key="GridCell.Tab.0.left/0.0.1596.997@0.0.1596.997" timestamp="1604474740225" />
+    <state width="1553" height="219" key="GridCell.Tab.0.left/0.0.1596.997@0.0.1596.997" timestamp="1604555154629" />
     <state width="1877" height="363" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1604200489640" />
-    <state width="1553" height="330" key="GridCell.Tab.0.right" timestamp="1604474740227">
+    <state width="1553" height="219" key="GridCell.Tab.0.right" timestamp="1604555154630">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state width="1553" height="330" key="GridCell.Tab.0.right/0.0.1596.997@0.0.1596.997" timestamp="1604474740227" />
+    <state width="1553" height="219" key="GridCell.Tab.0.right/0.0.1596.997@0.0.1596.997" timestamp="1604555154630" />
     <state width="1877" height="363" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604200489640" />
     <state width="1553" height="330" key="GridCell.Tab.1.bottom" timestamp="1604474740227">
       <screen x="0" y="0" width="1596" height="997" />
@@ -219,27 +230,27 @@
     </state>
     <state width="1553" height="330" key="GridCell.Tab.1.right/0.0.1596.997@0.0.1596.997" timestamp="1604474740227" />
     <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604200489640" />
-    <state width="258" height="517" key="HiddenNamespacesPopup" timestamp="1604135441974">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="214" height="477" key="HiddenNamespacesPopup" timestamp="1604482673070">
+      <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state width="214" height="477" key="HiddenNamespacesPopup/0.0.1596.997@0.0.1596.997" timestamp="1603787974347" />
+    <state width="214" height="477" key="HiddenNamespacesPopup/0.0.1596.997@0.0.1596.997" timestamp="1604482673070" />
     <state width="258" height="517" key="HiddenNamespacesPopup/0.0.1920.1080@0.0.1920.1080" timestamp="1604135441974" />
     <state x="300" y="143" key="SettingsEditor" timestamp="1603787953550">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
     <state x="300" y="143" key="SettingsEditor/0.0.1596.997@0.0.1596.997" timestamp="1603787953550" />
-    <state x="391" y="232" key="Vcs.Push.Dialog.v2" timestamp="1604476518281">
+    <state x="391" y="232" key="Vcs.Push.Dialog.v2" timestamp="1604479710471">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state x="391" y="232" key="Vcs.Push.Dialog.v2/0.0.1596.997@0.0.1596.997" timestamp="1604476518281" />
+    <state x="391" y="232" key="Vcs.Push.Dialog.v2/0.0.1596.997@0.0.1596.997" timestamp="1604479710471" />
     <state width="805" height="505" key="XDebugger.FullValuePopup" timestamp="1604366310965">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
     <state width="805" height="505" key="XDebugger.FullValuePopup/0.0.1596.997@0.0.1596.997" timestamp="1604366310965" />
-    <state x="698" y="361" key="com.intellij.database.actions.DdlActions$CreateObject$1" timestamp="1604279913924">
+    <state x="698" y="361" key="com.intellij.database.actions.DdlActions$CreateObject$1" timestamp="1604483591736">
       <screen x="0" y="0" width="1596" height="997" />
     </state>
-    <state x="698" y="361" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1596.997@0.0.1596.997" timestamp="1604279913924" />
+    <state x="698" y="361" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1596.997@0.0.1596.997" timestamp="1604483591736" />
     <state x="840" y="391" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1920.1080@0.0.1920.1080" timestamp="1604135528758" />
     <state x="675" y="363" width="334" height="270" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1604310239487">
       <screen x="0" y="0" width="1596" height="997" />

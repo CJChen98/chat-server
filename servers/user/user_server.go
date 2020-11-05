@@ -14,7 +14,6 @@ import (
 func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	pwd := c.PostForm("password")
-	println("username: " + username + " pwd: " + pwd)
 	u := models.User{
 		Username: username,
 		Password: pwd,

@@ -1,5 +1,7 @@
 package ws
 
+import "log"
+
 type Hub struct {
 	clients map[*Client]bool
 
@@ -22,6 +24,7 @@ func (h *Hub) Run() {
 		select {
 		case client := <-h.register:
 			h.clients[client] = true
+			log.Println("client register")
 		case client := <-h.unregister:
 			h.clients[client] = false
 		case message := <-h.broadcast:
