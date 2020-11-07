@@ -5,7 +5,6 @@ import (
 	"gin/config"
 	"gin/models"
 	"gin/routes"
-	"gin/ws"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -27,8 +26,7 @@ func init() {
 func main() {
 	//gin.SetMode(gin.ReleaseMode)
 	port := viper.GetString("app.port")
-	hub := ws.NewHub()
-	go hub.Run()
+
 	engine := routes.InitRoutes()
 	if err := engine.Run(port); err != nil {
 		println(err.Error())

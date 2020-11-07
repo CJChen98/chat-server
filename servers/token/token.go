@@ -37,7 +37,7 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	claims, err := CreateJWT().ParseToken(token)
+	_, err := CreateJWT().ParseToken(token)
 	if err != nil {
 		c.JSON(http.StatusOK, models.JSON{
 			Code: -2,
@@ -46,7 +46,7 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	c.Set("claims", claims)
+	c.Next()
 }
 
 func CreateJWT() *JWT {

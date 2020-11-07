@@ -10,25 +10,12 @@ import (
 )
 
 func InitRoutes() *gin.Engine {
-
 	engine := gin.Default()
-	//config := cors.DefaultConfig()
-	//config.AllowAllOrigins = true
-	//engine.Use(cors.New(cors.Config{
-	//	//AllowAllOrigins: true,
-	//	AllowOriginFunc:  func(origin string) bool { return true },
-	//	AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
-	//	AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type"},
-	//	AllowCredentials: true,
-	//	MaxAge:           12 * time.Hour,
-	//}))
-
+	hub := ws.NewHub()
+	go hub.Run()
 	engine.Use(CrossHandler())
 	v1 := engine.Group("/")
 	{
-		v1.GET("/", func(context *gin.Context) {
-			_, _ = context.Writer.WriteString("hello")
-		})
 		v1.POST("login", controller.LoginHandler)
 		v1.GET("ws/", func(c *gin.Context) {
 			tokenString, _ := c.GetQuery("token")
@@ -37,7 +24,6 @@ func InitRoutes() *gin.Engine {
 					Code: -1,
 					Msg:  "tokenString is null !",
 				})
-				c.Abort()
 				return
 			}
 			_, err := token.CreateJWT().ParseToken(tokenString)
@@ -46,22 +32,23 @@ func InitRoutes() *gin.Engine {
 					Code: -2,
 					Msg:  err.Error(),
 				})
-				c.Abort()
 				return
 			}
-			//c.Set("claims", claims)
 			hub.ServeWs(c)
 		})
-		authorized := v1.Group("/", token.MiddleTokenAuthHandler)
-		{
-			authorized.GET("logout", controller.LogoutHandler)
-			authorized.GET("find/", controller.FindHandler)
-			authorized.GET("home", controller.HomeHandler)
-			authorized.GET("room/:room_id", controller.RoomHandler)
-			authorized.GET("private-chat", controller.PrivateChatHandler)
-			authorized.POST("img-upload", controller.ImageUploadHandler)
-			authorized.GET("pagination", controller.PaginationHandler)
-		}
+	}
+	authorized := v1.Group("/",token.MiddleTokenAuthHandler)
+	{
+		authorized.GET("/", func(context *gin.Context) {
+			_, _ = context.Writer.WriteString("hello")
+		})
+		authorized.GET("logout", controller.LogoutHandler)
+		authorized.GET("find/", controller.FindHandler)
+		authorized.GET("home", controller.HomeHandler)
+		authorized.GET("room/:room_id", controller.RoomHandler)
+		authorized.GET("private-chat", controller.PrivateChatHandler)
+		authorized.POST("img-upload", controller.ImageUploadHandler)
+		authorized.GET("pagination", controller.PaginationHandler)
 	}
 	return engine
 }
