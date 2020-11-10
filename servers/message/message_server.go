@@ -1,4 +1,4 @@
-package servers
+package message_server
 
 import (
 	"gin/models"

@@ -2,8 +2,10 @@ package controller
 
 import (
 	"gin/models"
-	servers "gin/servers/message"
-	user_service "gin/servers/user"
+	"gin/servers/message"
+	"gin/servers/token"
+	"gin/servers/user"
+	"gin/ws"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -14,12 +16,7 @@ func LoginHandler(c *gin.Context) {
 func LogoutHandler(ctx *gin.Context) {
 	user_service.Logout(ctx)
 }
-func HomeHandler(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 1,
-		"msg":  "NMSL",
-	})
-}
+
 func FindHandler(ctx *gin.Context) {
 	kind, ok := ctx.GetQuery("kind")
 	if !ok {
@@ -30,6 +27,16 @@ func FindHandler(ctx *gin.Context) {
 		return
 	}
 	switch kind {
+	case "home":
+		id, ok := ctx.GetQuery("id")
+		if !ok {
+			ctx.JSON(http.StatusOK, models.JSON{
+				Code: 444,
+				Msg:  "未定义查询ID",
+			})
+			return
+		}
+		models.FindConversationByUserID(id)
 	case "room_msg":
 		id, ok := ctx.GetQuery("id")
 		if !ok {
@@ -43,17 +50,28 @@ func FindHandler(ctx *gin.Context) {
 		if !ok {
 			page = "0"
 		}
-		servers.GetMessageList(ctx, id, page)
+		message_server.GetMessageList(ctx, id, page)
 	}
 }
-func RoomHandler(ctx *gin.Context) {
 
-}
-
-func PrivateChatHandler(ctx *gin.Context) {
-
-}
-
-func PaginationHandler(ctx *gin.Context) {
-
+func Http2WS(hub *ws.Hub) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		tokenString, _ := c.GetQuery("token")
+		if tokenString == "" {
+			c.JSON(http.StatusOK, models.JSON{
+				Code: -1,
+				Msg:  "tokenString is null !",
+			})
+			return
+		}
+		_, err := token.CreateJWT().ParseToken(tokenString)
+		if err != nil {
+			c.JSON(http.StatusOK, models.JSON{
+				Code: -2,
+				Msg:  err.Error(),
+			})
+			return
+		}
+		hub.ServeWs(c)
+	}
 }

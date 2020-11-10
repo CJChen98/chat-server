@@ -45,3 +45,34 @@ CREATE TABLE `users`
   ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE if exists `rooms`;
+create table `rooms`
+(
+    `id`          int(11) unsigned                                          not null auto_increment,
+    `creator_id`   int(11),
+    `room_name`    varchar(50) char set utf8mb4 COLLATE utf8mb4_general_ci   not null default '' comment '群名',
+    `member_size`  int(11)                                                   not null default 1 comment '群人数',
+    `introduction` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '聊天介绍',
+    `id_`           varchar(20) char set utf8mb4 COLLATE utf8mb4_general_ci   not null default '' comment '群id',
+    `created_at`   long                                                      null comment '群创建时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `inx_id` (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci
+  ROW_FORMAT = DYNAMIC;
+
+DROP TABLE if exists `conversations`;
+create table `conversations`
+(
+    `id`          int(11) unsigned not null auto_increment,
+    `receiver_id` int(11) comment '会话接收者',
+    `private`     bool             not null default false comment '是否为私聊',
+    `user_id`     int(11) comment '会话发起者',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `inx_id` (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci
+  ROW_FORMAT = DYNAMIC;

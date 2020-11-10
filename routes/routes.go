@@ -17,41 +17,23 @@ func InitRoutes() *gin.Engine {
 	v1 := engine.Group("/")
 	{
 		v1.POST("login", controller.LoginHandler)
-		v1.GET("ws/", func(c *gin.Context) {
-			tokenString, _ := c.GetQuery("token")
-			if tokenString == "" {
-				c.JSON(http.StatusOK, models.JSON{
-					Code: -1,
-					Msg:  "tokenString is null !",
-				})
-				return
-			}
-			_, err := token.CreateJWT().ParseToken(tokenString)
-			if err != nil {
-				c.JSON(http.StatusOK, models.JSON{
-					Code: -2,
-					Msg:  err.Error(),
-				})
-				return
-			}
-			hub.ServeWs(c)
-		})
+		v1.GET("ws/", controller.Http2WS(hub))
 	}
-	authorized := v1.Group("/",token.MiddleTokenAuthHandler)
+	authorized := v1.Group("/", token.MiddleTokenAuthHandler)
 	{
 		authorized.GET("/", func(context *gin.Context) {
-			_, _ = context.Writer.WriteString("hello")
+			context.JSON(http.StatusOK, models.JSON{
+				Code: 1,
+			})
 		})
 		authorized.GET("logout", controller.LogoutHandler)
-		authorized.GET("find/", controller.FindHandler)
-		authorized.GET("home", controller.HomeHandler)
-		authorized.GET("room/:room_id", controller.RoomHandler)
-		authorized.GET("private-chat", controller.PrivateChatHandler)
+		authorized.GET("fetch/", controller.FindHandler)
+		authorized.POST("create/room",controller.CreateRoomHandler)
 		authorized.POST("img-upload", controller.ImageUploadHandler)
-		authorized.GET("pagination", controller.PaginationHandler)
 	}
 	return engine
 }
+
 //跨域访问：cross  origin resource share
 func CrossHandler() gin.HandlerFunc {
 	return func(context *gin.Context) {

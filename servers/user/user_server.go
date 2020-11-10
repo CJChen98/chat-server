@@ -70,8 +70,7 @@ func Logout(ctx *gin.Context) {
 
 func generationToken(ctx *gin.Context, u *models.User) (string, error) {
 	claims := token.MyClaims{
-		Uid:      u.ID,
-		Username: u.Username,
+		User: *u,
 		StandardClaims: jwt.StandardClaims{
 			Id:        strconv.Itoa(int(u.ID)),
 			NotBefore: time.Now().Unix(),        // 签名生效时间

@@ -4,7 +4,7 @@ import "log"
 
 type Hub struct {
 	clients map[*Client]bool
-
+	private chan []byte
 	broadcast  chan []byte
 	register   chan *Client
 	unregister chan *Client

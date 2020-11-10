@@ -40,6 +40,7 @@ type Client struct {
 	conn         *websocket.Conn
 	send         chan []byte
 }
+
 // readPump pumps messages from the websocket connection to the hub.
 //
 // The application runs readPump in a per-connection goroutine. The application
@@ -72,6 +73,10 @@ func (c *Client) readPump() {
 		}
 		clientMsg = models.SaveContent(clientMsg)
 		message, _ = json.Marshal(clientMsg)
+		//if message, _ = json.Marshal(clientMsg); clientMsg.ToUserId > 0 {
+		//
+		//}
+
 		c.hub.broadcast <- message
 	}
 }

@@ -11,8 +11,7 @@ import (
 )
 
 type MyClaims struct {
-	Uid      uint
-	Username string
+	models.User
 	jwt.StandardClaims
 }
 type JWT struct {
@@ -37,7 +36,7 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	_, err := CreateJWT().ParseToken(token)
+	clamis, err := CreateJWT().ParseToken(token)
 	if err != nil {
 		c.JSON(http.StatusOK, models.JSON{
 			Code: -2,
@@ -46,6 +45,7 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	c.Set("clamis", clamis)
 	c.Next()
 }
 
