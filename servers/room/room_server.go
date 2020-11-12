@@ -33,3 +33,19 @@ func CreateRoom(ctx *gin.Context) {
 			Rooms:         []models.Room{*room},
 		}})
 }
+
+func FindRoomByID(ctx *gin.Context, id string) {
+	room := models.FindRoomByID(id)
+	if room.ID < 1 {
+		ctx.JSON(http.StatusNotFound, models.JSON{
+			Code: 404,
+			Msg:  "群号:" + id + "未找到",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, models.JSON{
+		Code: 2001,
+		Msg:  "群号:" + id,
+		Data: models.Data{Rooms: []models.Room{room}},
+	})
+}

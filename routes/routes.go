@@ -16,6 +16,19 @@ func InitRoutes() *gin.Engine {
 	engine.Use(CrossHandler())
 	v1 := engine.Group("/")
 	{
+		v1.GET("json", func(context *gin.Context) {
+			context.JSON(http.StatusOK, models.JSON{
+				Code: 1,
+				Msg:  "a",
+				Data: models.Data{
+					User:          models.User{},
+					Users:         make([]models.User, 1),
+					Messages:      make([]models.Message, 1),
+					Rooms:         make([]models.Room, 1),
+					Conversations: make([]models.Conversation, 1),
+				},
+			})
+		})
 		v1.POST("login", controller.LoginHandler)
 		v1.GET("ws/", controller.Http2WS(hub))
 	}
@@ -27,8 +40,8 @@ func InitRoutes() *gin.Engine {
 			})
 		})
 		authorized.GET("logout", controller.LogoutHandler)
-		authorized.GET("fetch/", controller.FindHandler)
-		authorized.POST("create/room",controller.CreateRoomHandler)
+		authorized.GET("fetch/", controller.FetchHandler)
+		authorized.POST("create/room", controller.CreateRoomHandler)
 		authorized.POST("img-upload", controller.ImageUploadHandler)
 	}
 	return engine

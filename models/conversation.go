@@ -1,6 +1,9 @@
 package models
 
+import "gorm.io/gorm"
+
 type Conversation struct {
+	gorm.Model
 	ID         uint
 	Private    bool `json:"private"`
 	ReceiverID uint `json:"receiver_id"`

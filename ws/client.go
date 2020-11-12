@@ -65,7 +65,7 @@ func (c *Client) readPump() {
 		//message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		clientMsg := models.Message{}
 		//str:=string(message)
-
+		log.Println(string(message))
 		err = json.Unmarshal(message, &clientMsg)
 		if err != nil {
 			println(err.Error())
@@ -73,9 +73,6 @@ func (c *Client) readPump() {
 		}
 		clientMsg = models.SaveContent(clientMsg)
 		message, _ = json.Marshal(clientMsg)
-		//if message, _ = json.Marshal(clientMsg); clientMsg.ToUserId > 0 {
-		//
-		//}
 
 		c.hub.broadcast <- message
 	}

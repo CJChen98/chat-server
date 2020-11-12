@@ -63,7 +63,21 @@ func Login(c *gin.Context) {
 		return
 	}
 }
-
+func FindUserById(ctx *gin.Context, id string) {
+	u := models.FindUserByField("id", id)
+	if u.ID < 1 {
+		ctx.JSON(http.StatusNotFound, models.JSON{
+			Code: 404,
+			Msg:  "用户:" + id + "未找到",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, models.JSON{
+		Code: 2002,
+		Msg:  "用户:" + id,
+		Data: models.Data{Users: []models.User{u}},
+	})
+}
 func Logout(ctx *gin.Context) {
 
 }
