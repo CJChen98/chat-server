@@ -2,12 +2,12 @@ package user_service
 
 import (
 	"gin/models"
+	room_server "gin/servers/room"
 	"gin/servers/security"
 	"gin/servers/token"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -35,10 +35,10 @@ func Login(c *gin.Context) {
 			"password": md5Pwd,
 		})
 		userInfo = *newUser
+		_ = room_server.AddToSystemRoom(userInfo.SnowId)
 	}
 	if userInfo.ID > 0 {
-		//session.SaveAuthSession(c, strconv.Itoa(int(userInfo.ID)))
-		tokenString, err := generationToken(c, &userInfo)
+		tokenString, err := generationToken(&userInfo)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, models.JSON{Code: http.StatusInternalServerError, Msg: "create tokenString failure"})
 			return
@@ -64,7 +64,7 @@ func Login(c *gin.Context) {
 	}
 }
 func FindUserById(ctx *gin.Context, id string) {
-	u := models.FindUserByField("id", id)
+	u := models.FindUserByField("snow_id", id)
 	if u.ID < 1 {
 		ctx.JSON(http.StatusNotFound, models.JSON{
 			Code: 404,
@@ -82,11 +82,11 @@ func Logout(ctx *gin.Context) {
 
 }
 
-func generationToken(ctx *gin.Context, u *models.User) (string, error) {
+func generationToken(u *models.User) (string, error) {
 	claims := token.MyClaims{
 		User: *u,
 		StandardClaims: jwt.StandardClaims{
-			Id:        strconv.Itoa(int(u.ID)),
+			Id:        u.SnowId,
 			NotBefore: time.Now().Unix(),        // 签名生效时间
 			ExpiresAt: time.Now().Unix() + 7200, // 过期时间 2小时
 			Issuer:    "chitanda-gin-chat",      //签名的发行者

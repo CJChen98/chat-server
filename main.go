@@ -5,6 +5,7 @@ import (
 	"gin/config"
 	"gin/models"
 	"gin/routes"
+	"gin/snow"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -22,10 +23,15 @@ func init() {
 		log.Fatal(err) // 读取配置文件失败致命错误
 	}
 	models.InitDB()
+	snow.SnowflakeInit()
 }
 func main() {
 	//gin.SetMode(gin.ReleaseMode)
 	port := viper.GetString("app.port")
+	_, err := models.CreateSystemRoom()
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 	engine := routes.InitRoutes()
 	if err := engine.Run(port); err != nil {

@@ -7,9 +7,9 @@ import (
 	"strconv"
 )
 
-func GetMessageList(ctx *gin.Context, conversationId string, page string) {
-	if len(conversationId) != 0 {
-		list, maxPage := models.GetMsgListByConversationId(conversationId, page)
+func GetMessageList(ctx *gin.Context, receiverId string, page string) {
+	if len(receiverId) != 0 {
+		list, maxPage := models.GetMsgListByReceiverId(receiverId, page)
 		if list == nil {
 			ctx.JSON(http.StatusOK, models.JSON{
 				Code: 201,

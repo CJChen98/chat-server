@@ -1,16 +1,18 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Conversation struct {
 	gorm.Model
 	ID         uint
-	Private    bool `json:"private"`
-	ReceiverID uint `json:"receiver_id"`
-	UserID     uint `json:"user_id"`
+	Private    bool   `json:"private"`
+	ReceiverID string `json:"receiver_id"`
+	UserID     string `json:"user_id"`
 }
 
-func AddConversation(private bool, receiver uint, user uint) (*Conversation, error) {
+func AddConversation(private bool, receiver string, user string) (*Conversation, error) {
 	var c Conversation
 	c.Private = private
 	c.ReceiverID = receiver
