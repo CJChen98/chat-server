@@ -35,9 +35,8 @@ func FindUserByField(field, value string) User {
 	return u
 }
 
-func SaveAvatarPath(avatarPath string, u User) {
-	u.AvatarPath = avatarPath
-	ChatDB.Save(&u)
+func SaveUserAvatarPath(avatarPath string, id string) {
+	ChatDB.Model(&User{}).Where("snow_id = ?", id).Update("avatar_path", avatarPath)
 }
 
 //func GetOnlineUserList(uids []float64) []map[string]interface{} {

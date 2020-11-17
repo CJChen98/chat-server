@@ -11,6 +11,8 @@ mysql.dsn // mysql 连接地址dsn
 var AppJsonConfig = []byte(`
 {
   "app": {
+	"host": "https://api.chitanda.cn",
+	"dev-host": "https://127.0.0.1:1234",
     "port": ":1234",
     "upload_file_path": "e:\\golang\\www\\go-gin-chat\\tmp_images\\",
     "cookie_key": "4238uihfieh49r3453kjdfg",

@@ -2,7 +2,6 @@ package models
 
 import (
 	"gorm.io/gorm"
-	"sort"
 	"strconv"
 )
 
@@ -53,24 +52,6 @@ func GetMsgListByReceiverId(receiverId string, page string) ([]Message, int) {
 		Find(&result)
 	return result, int(maxPage)
 }
-func GetLimitMsg(roomId string, offset int) []map[string]interface{} {
-
-	var results []map[string]interface{}
-	ChatDB.Model(&Message{}).
-		Select("messages.*, users.username ,users.avatar_id").
-		Joins("INNER Join users on users.ID = messages.user_id").
-		Where("messages.room_id = " + roomId).
-		Where("messages.to_user_id = 0").
-		Order("messages.ID desc").
-		Offset(offset).
-		Limit(100).
-		Scan(&results)
-
-	if offset == 0 {
-		sort.Slice(results, func(i, j int) bool {
-			return results[i]["ID"].(uint32) < results[j]["ID"].(uint32)
-		})
-	}
-
-	return results
+func SaveMessageImage(path string, id string) {
+	ChatDB.Model(&Message{}).Where("id = ?", id).Update("image_url", path)
 }

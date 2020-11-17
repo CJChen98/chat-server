@@ -64,3 +64,7 @@ func FindRoomByCreator(creator string) []Room {
 	ChatDB.Where("creator_id = ?", creator).Find(&rooms)
 	return rooms
 }
+
+func SaveRoomAvatarPath(avatarPath string, id string) {
+	ChatDB.Model(&Room{}).Where("snow_id = ?", id).Update("avatar_path", avatarPath)
+}

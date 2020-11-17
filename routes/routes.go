@@ -42,7 +42,7 @@ func InitRoutes() *gin.Engine {
 		authorized.GET("logout", controller.LogoutHandler)
 		authorized.GET("fetch/", controller.FetchHandler)
 		authorized.POST("create/room", controller.CreateRoomHandler)
-		authorized.POST("img-upload", controller.ImageUploadHandler)
+		authorized.POST("upload", controller.ImageUploadHandler)
 	}
 	return engine
 }

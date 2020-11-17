@@ -45,8 +45,8 @@ func MiddleTokenAuthHandler(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	c.Set("clamis", clamis)
-	c.Next()
+	c.Set("userinfo", clamis)
+	//c.Next()
 }
 
 func CreateJWT() *JWT {
