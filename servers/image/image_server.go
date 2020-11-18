@@ -32,7 +32,8 @@ func SaveUserAvatar(ctx *gin.Context, kind string) {
 	dts := ImageSavePath + kind + "/"
 	checkPath(dts)
 	userinfo := ctx.MustGet("userinfo").(*token.MyClaims)
-	filepath := path.Join(dts, userinfo.SnowId+".png")
+	id := snow.Snowflake.GetStringId()
+	filepath := path.Join(dts, id+".png")
 	err = save(header, filepath)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.JSON{
@@ -42,7 +43,7 @@ func SaveUserAvatar(ctx *gin.Context, kind string) {
 		ctx.Abort()
 		return
 	}
-	url := generateImgUrl(kind, userinfo.SnowId)
+	url := generateImgUrl(kind, id)
 	models.SaveUserAvatarPath(url, userinfo.SnowId)
 	ctx.JSON(http.StatusOK, models.JSON{
 		Code: 200,
@@ -51,7 +52,7 @@ func SaveUserAvatar(ctx *gin.Context, kind string) {
 }
 func SaveRoomAvatar(ctx *gin.Context, kind string) {
 	header, err := ctx.FormFile("img")
-	id, ok := ctx.GetQuery("id")
+	//id, ok := ctx.GetQuery("id")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSON{
 			Code: 400,
@@ -60,18 +61,10 @@ func SaveRoomAvatar(ctx *gin.Context, kind string) {
 		ctx.Abort()
 		return
 	}
-	if !ok {
-		if !ok {
-			ctx.JSON(http.StatusBadRequest, models.JSON{
-				Code: 400,
-				Msg:  "未提供图片id",
-			})
-			ctx.Abort()
-			return
-		}
-	}
+
 	dts := ImageSavePath + kind + "/"
 	checkPath(dts)
+	id := snow.Snowflake.GetStringId()
 	filepath := path.Join(dts, id+".png")
 	err = save(header, filepath)
 	if err != nil {
