@@ -27,6 +27,7 @@ func AddRoom(value *Room) (*Room, error) {
 	room.RoomName = value.RoomName
 	room.Introduction = value.Introduction
 	room.SnowId = snow.Snowflake.GetStringId()
+	room.AvatarPath = "/img?type=room&id=default"
 	err := ChatDB.Create(&room)
 	return &room, err.Error
 }
@@ -41,6 +42,7 @@ func CreateSystemRoom() (*Room, error) {
 	room.RoomName = "GinChat"
 	room.Introduction = "用户注册默认加入"
 	room.SnowId = snow.Snowflake.GetStringId()
+	room.AvatarPath = "/img?type=room&id=default"
 	err := ChatDB.Create(&room)
 	return &room, err.Error
 }

@@ -50,9 +50,7 @@ func Login(c *gin.Context) {
 				Msg:   "登录成功",
 				Token: tokenString,
 				Data: models.Data{
-					User:     u,
-					Messages: make([]models.Message, 1),
-					Users:    make([]models.User, 1),
+					Users: []models.User{u},
 				},
 			})
 			return

@@ -21,7 +21,6 @@ func InitRoutes() *gin.Engine {
 				Code: 1,
 				Msg:  "a",
 				Data: models.Data{
-					User:          models.User{},
 					Users:         make([]models.User, 1),
 					Messages:      make([]models.Message, 1),
 					Rooms:         make([]models.Room, 1),
@@ -43,7 +42,9 @@ func InitRoutes() *gin.Engine {
 		authorized.GET("fetch/", controller.FetchHandler)
 		authorized.POST("create/room", controller.CreateRoomHandler)
 		authorized.POST("upload", controller.ImageUploadHandler)
+		//authorized.GET("img", controller.ImageHandler)
 	}
+	v1.GET("img", controller.ImageHandler)
 	return engine
 }
 
