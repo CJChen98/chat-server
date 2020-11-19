@@ -63,9 +63,10 @@ func (c *Client) readPump() {
 			break
 		}
 		//message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		if "close" == string(message) {
+			break
+		}
 		clientMsg := models.Message{}
-		//str:=string(message)
-		log.Println(string(message))
 		err = json.Unmarshal(message, &clientMsg)
 		if err != nil {
 			println(err.Error())
@@ -73,7 +74,6 @@ func (c *Client) readPump() {
 		}
 		clientMsg = models.SaveContent(clientMsg)
 		message, _ = json.Marshal(clientMsg)
-
 		c.hub.broadcast <- message
 	}
 }

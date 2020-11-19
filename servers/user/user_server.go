@@ -75,6 +75,7 @@ func FindUserById(ctx *gin.Context, id string) {
 		Msg:  "用户:" + id,
 		Data: models.Data{Users: []models.User{u}},
 	})
+	return
 }
 func Logout(ctx *gin.Context) {
 
