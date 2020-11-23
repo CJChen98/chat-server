@@ -22,6 +22,6 @@ func AddConversation(private bool, receiver string, user string) (*Conversation,
 }
 func FindConversationByUserID(id string) []Conversation {
 	var conversations []Conversation
-	ChatDB.Where("user_id = ?", id).Find(&conversations)
+	ChatDB.Where("user_id = ? OR receiver_id = ?", id, id).Find(&conversations)
 	return conversations
 }

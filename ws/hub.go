@@ -24,15 +24,23 @@ func (h *Hub) Run() {
 		select {
 		case client := <-h.register:
 			h.clients[client] = true
-			log.Println("client register")
+			log.Println(client.Username, "上线")
+			i := 0
+			for k, v := range h.clients {
+				log.Println(k.Username, "->", v)
+				i++
+			}
+			log.Println("一共有", i, "个连接")
 		case client := <-h.unregister:
 			h.clients[client] = false
+			delete(h.clients, client)
+			log.Println(client.Username, "下线")
 		case message := <-h.broadcast:
 
 			for client := range h.clients {
+
 				select {
 				case client.send <- message:
-					log.Println("send message" + string(message))
 				default:
 					close(client.send)
 					delete(h.clients, client)

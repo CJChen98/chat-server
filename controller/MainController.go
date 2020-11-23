@@ -90,7 +90,7 @@ func Http2WS(hub *ws.Hub) func(c *gin.Context) {
 			})
 			return
 		}
-		_, err := token.CreateJWT().ParseToken(tokenString)
+		claims, err := token.CreateJWT().ParseToken(tokenString)
 		if err != nil {
 			ctx.JSON(http.StatusOK, models.JSON{
 				Code: -2,
@@ -98,6 +98,7 @@ func Http2WS(hub *ws.Hub) func(c *gin.Context) {
 			})
 			return
 		}
+		ctx.Set("userinfo", claims)
 		hub.ServeWs(ctx)
 	}
 }

@@ -3,6 +3,7 @@ package ws
 import (
 	"encoding/json"
 	"gin/models"
+	"gin/servers/token"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
@@ -134,7 +135,8 @@ func (h *Hub) ServeWs(ctx *gin.Context) {
 		log.Println(err)
 		return
 	}
-	client := &Client{hub: h, conn: conn, send: make(chan []byte, 256)}
+	user := ctx.MustGet("userinfo").(*token.MyClaims)
+	client := &Client{Id: user.SnowId, Username: user.Username, hub: h, conn: conn, send: make(chan []byte, 256)}
 	client.hub.register <- client
 
 	// Allow collection of memory referenced by the caller by doing all work in
